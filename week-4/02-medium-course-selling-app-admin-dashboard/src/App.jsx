@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginUser from "./components/Login-user";
 import LoginAdmin from "./components/Login-admin";
 import Landing from "./components/Landing";
 import CreateCourse from "./components/CreateCourse";

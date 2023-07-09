@@ -137,8 +137,8 @@ app.post("/users/signup", async (req, res) => {
 
 app.post("/users/login", async (req, res) => {
   // logic to log in user
-  let userName = req.headers.username;
-  let password = req.headers.password;
+  let userName = req.body.username;
+  let password = req.body.password;
   let existingUser = await USERS.findOne({ username: userName });
   if (existingUser && existingUser.password === password) {
     const token = generateJwt({
@@ -157,6 +157,19 @@ app.get("/users/courses", checkToken, async (req, res) => {
   res.json({
     courses: filteredCourses,
   });
+});
+app.get("/users/courses/:courseId", checkToken, async (req, res) => {
+  // logic to list courses
+  let courseId = req.params.courseId;
+
+  let coursePurchased = await COURSES.findById(courseId);
+  if (coursePurchased) {
+    return res.json({ course: coursePurchased });
+  } else {
+    return res
+      .status(404)
+      .json({ message: "Course not found or not available" });
+  }
 });
 
 app.post("/users/courses/:courseId", checkToken, async (req, res) => {
